@@ -11,14 +11,14 @@ static char* GetErrorText(DWORD code)
 
 	switch (code)
 	{
-	case ERROR_FILE_NOT_FOUND:
-		strcat(buffer, ": File not found");		
+		case ERROR_FILE_NOT_FOUND:
+			strcat(buffer, ": File not found");		
 
-	case ERROR_ACCESS_DENIED:
-		strcat(buffer, ": Access denied");		
+		case ERROR_ACCESS_DENIED:
+			strcat(buffer, ": Access denied");		
 
-	default:
-		strcat(buffer, ": Unknown error code");		
+		default:
+			strcat(buffer, ": Unknown error code");		
 	}
 
 	return buffer;
@@ -144,7 +144,7 @@ int main(int argc, char* argv[])
 		return 1; // Exit if no COM port is provided
 	}
 
-	char* portName = { argv[1] }; // +1 leaves out '-'
+	char* portName = { argv[1] }; 
 
 	if (portName[0] != '-')
 	{
@@ -152,11 +152,12 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	portName++;
+	portName++; // +1 leaves out '-'
 
 	if (strnlen(portName, 100) > 100)
 	{
 		fprintf(stderr, "Portname cannot exceed 100 characters");
+		return 1;
 	}
 
 
