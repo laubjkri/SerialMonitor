@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <stdio.h>
+#include <conio.h>
 
 #pragma warning(disable : 4996)
 
@@ -133,6 +134,13 @@ static void MonitorUsbSerial(const char* comPortName)
 	}
 }
 
+static void PressKeyToExit()
+{
+	printf("Press any key to exit...");
+	_getch(); // windows specific
+}
+
+
 
 int main(int argc, char* argv[])
 {
@@ -140,7 +148,8 @@ int main(int argc, char* argv[])
 	// Check if a COM port is specified as a command line argument
 	if (argc < 2)
 	{
-		fprintf(stderr, "COM port must be specified as a parameter. Example: SerialMonitor -COM3\n");
+		fprintf(stderr, "COM port must be specified as a parameter. Example: SerialMonitor -COM3\n");		
+		PressKeyToExit();
 		return 1; // Exit if no COM port is provided
 	}
 
@@ -149,6 +158,7 @@ int main(int argc, char* argv[])
 	if (portName[0] != '-')
 	{
 		fprintf(stderr, "Invalid format of port name '%s'. Example: SerialMonitor -COM3", portName);
+		PressKeyToExit();
 		return 1;
 	}
 
@@ -157,6 +167,7 @@ int main(int argc, char* argv[])
 	if (strnlen(portName, 100) > 100)
 	{
 		fprintf(stderr, "Portname cannot exceed 100 characters");
+		PressKeyToExit();
 		return 1;
 	}
 
